@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="suprStor">
+  <head>
+    <script src="lib/angular.js"></script>
+    <script src="app.js"></script>
+    <script src="js/StoresController.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <title>Supr Stor</title>
+  </head>
+  <body>
+    <div class="container" ng-controller="StorCtrl">
+      <div id="store-search">
+        <h3>Search Stors</h3>
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <input ng-model="query" type="text" class="form-control" placeholder="search">
+          </div>
+        </form>
+      </div>
+      <div id="store-list">
+        <h2 ng-show="stores.length && filtered.length">Stors</h2>
+        <h2 ng-show="stores.length && !filtered.length">No Stors :(</h2>
+        <ul>
+          <li ng-repeat="item in filtered = (stores | filter:query)" class="item-display">
+            <span ng-click="editing = true" ng-hide="editing">
+              {{item.name}}
+              {{item.type}}
+              {{item.location}}
+              {{item.squareFootage}}
+            </span>
+            <span ng-hide="editing">
+              <a ng-click="deleteStore(item)">Delete</a>
+            </span>
+
+            <span class="form-group" ng-show="editing" ng-submit="editing = false">
+              <form class="form-inline" role="form">
+                <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="stor name"/>
+                <input type="text" class="form-control input-sm" ng-model="item.type" placeholder="stor type"/>
+                <input type="text" class="form-control input-sm" ng-model="item.location" placeholder="stor location"/>
+                <input type="text" class="form-control input-sm" ng-model="item.squareFootage" placeholder="stor square footage"/>
+                <button class="btn btn-default btn-sm" type="submit">Save</button>
+              </form>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div id="new-stor">
+        <h2>New Stor</h2>
+        <form ng-submit="addStore()" class="form-inline" role="form">
+          <div class"form-group">
+            <input type="text" ng-model="storeName" class="form-control" placeholder="stor name" required/>
+            <input type="text" ng-model="storeType" class="form-control" placeholder="stor type" required/>
+            <input type="text" ng-model="storeLocation" class="form-control" placeholder="stor location" required/>
+            <input type="text" ng-model="squareFootage" class="form-control" placeholder="stor square footage" required/>
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -20,6 +20,4 @@ suprStor.controller('StorCtrl', function StorCtrl($scope) {
     var index = $scope.stores.indexOf(store);
     $scope.stores.splice(index, 1);
   };
-
-  //hey i wonder how git works
 });
