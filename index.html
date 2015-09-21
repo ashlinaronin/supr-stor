@@ -11,6 +11,7 @@
   </head>
   <body>
     <div class="container" ng-controller="StorCtrl">
+
       <div id="store-search">
         <h3>Search Stors</h3>
         <form class="form-inline" role="form">
@@ -20,14 +21,16 @@
           </div>
         </form>
       </div>
+
       <div id="store-list">
         <h2 ng-show="stores.length && filtered.length">Stors</h2>
         <h2 ng-show="stores.length && !filtered.length">No Stors :(</h2>
         <ul>
-          <li ng-repeat="item in filtered = (stores | filter:search:strict)" class="item-display animate-repeat">
+          <li ng-repeat="item in filtered = (stores | filter: search.name)" class="item-display">
             <span ng-click="editing = true" ng-hide="editing">
               {{item.name}}
-              <span ng-repeat="(key, val) in item.type | storeType">
+
+              <span ng-repeat="(key, val) in item.type | valTrue">
                 {{key}}
               </span>
               @ {{item.location}} ({{item.squareFootage}} sqft)
@@ -39,9 +42,6 @@
             <span class="form-group" ng-show="editing" ng-submit="editing = false">
               <form class="form-inline" role="form">
                 <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="stor name"/>
-                <label for="hypermarket">
-                  <input type="checkbox" ng-model="item.type"/>
-                </label>
                 <input type="text" class="form-control input-sm" ng-model="item.location" placeholder="stor location"/>
                 <input type="text" class="form-control input-sm" ng-model="item.squareFootage" placeholder="stor square footage"/>
 

@@ -16,7 +16,10 @@ suprStor.controller('StorCtrl', function StorCtrl($scope) {
 
     // Clear input fields
     $scope.storeName = null;
-    $scope.storeType = null;
+    $scope.type.hyper = null;
+    $scope.type.mega = null;
+    $scope.type.super = null;
+    $scope.type.ultra = null;
     $scope.storeLocation = null;
     $scope.squareFootage = null;
   };
