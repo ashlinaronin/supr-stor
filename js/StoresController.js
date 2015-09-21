@@ -4,15 +4,20 @@ suprStor.controller('StorCtrl', function StorCtrl($scope) {
   $scope.addStore = function() {
     $scope.stores.push({
       name: $scope.storeName,
-      type: $scope.storeType,
+      type: {
+              hyper: $scope.type.hyper,
+              mega: $scope.type.mega,
+              super: $scope.type.super,
+              ultra: $scope.type.ultra
+            },
       location: $scope.storeLocation,
       squareFootage: $scope.squareFootage
     });
 
     // Clear input fields
-    $scope.name = null;
-    $scope.type = null;
-    $scope.location = null;
+    $scope.storeName = null;
+    $scope.storeType = null;
+    $scope.storeLocation = null;
     $scope.squareFootage = null;
   };
 

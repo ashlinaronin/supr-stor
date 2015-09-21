@@ -4,6 +4,8 @@
     <script src="lib/angular.js"></script>
     <script src="app.js"></script>
     <script src="js/StoresController.js"></script>
+    <script src="js/filters.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <title>Supr Stor</title>
   </head>
@@ -13,7 +15,8 @@
         <h3>Search Stors</h3>
         <form class="form-inline" role="form">
           <div class="form-group">
-            <input ng-model="query" type="text" class="form-control" placeholder="search">
+            <!-- search by name -->
+            <input ng-model="search.name" type="text" class="form-control" placeholder="search">
           </div>
         </form>
       </div>
@@ -21,12 +24,13 @@
         <h2 ng-show="stores.length && filtered.length">Stors</h2>
         <h2 ng-show="stores.length && !filtered.length">No Stors :(</h2>
         <ul>
-          <li ng-repeat="item in filtered = (stores | filter:query)" class="item-display">
+          <li ng-repeat="item in filtered = (stores | filter:search:strict)" class="item-display animate-repeat">
             <span ng-click="editing = true" ng-hide="editing">
               {{item.name}}
-              {{item.type}}
-              {{item.location}}
-              {{item.squareFootage}}
+              <span ng-repeat="(key, val) in item.type | storeType">
+                {{key}}
+              </span>
+              @ {{item.location}} ({{item.squareFootage}} sqft)
             </span>
             <span ng-hide="editing">
               <a ng-click="deleteStore(item)">Delete</a>
@@ -35,9 +39,12 @@
             <span class="form-group" ng-show="editing" ng-submit="editing = false">
               <form class="form-inline" role="form">
                 <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="stor name"/>
-                <input type="text" class="form-control input-sm" ng-model="item.type" placeholder="stor type"/>
+                <label for="hypermarket">
+                  <input type="checkbox" ng-model="item.type"/>
+                </label>
                 <input type="text" class="form-control input-sm" ng-model="item.location" placeholder="stor location"/>
                 <input type="text" class="form-control input-sm" ng-model="item.squareFootage" placeholder="stor square footage"/>
+
                 <button class="btn btn-default btn-sm" type="submit">Save</button>
               </form>
             </span>
@@ -49,7 +56,26 @@
         <form ng-submit="addStore()" class="form-inline" role="form">
           <div class"form-group">
             <input type="text" ng-model="storeName" class="form-control" placeholder="stor name" required/>
-            <input type="text" ng-model="storeType" class="form-control" placeholder="stor type" required/>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="type.hyper"/> hypermarket
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="type.mega"/> mega-mart
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="type.super"/> superstore
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="type.ultra"/> ultrashop
+              </label>
+            </div>
             <input type="text" ng-model="storeLocation" class="form-control" placeholder="stor location" required/>
             <input type="text" ng-model="squareFootage" class="form-control" placeholder="stor square footage" required/>
           </div>
